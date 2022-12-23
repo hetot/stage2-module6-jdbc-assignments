@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 @Setter
 public class CustomDataSource implements DataSource {
     private static volatile CustomDataSource instance;
-    private static final String filePathConnectionDB = "/app.properties";
+    private static final String filePathConnectionDB = "app.properties";
     private final String driver;
     private final String url;
     private final String name;
@@ -35,7 +35,7 @@ public class CustomDataSource implements DataSource {
             String tmp_name;
             String tmp_password;
 
-            try (InputStream input = CustomDataSource.class.getClassLoader().getResourceAsStream("filePathConnectionDB")) {
+            try (InputStream input = CustomDataSource.class.getClassLoader().getResourceAsStream(filePathConnectionDB)) {
                 Properties prop = new Properties();
                 prop.load(input);
                 tmp_driver = prop.getProperty("postgres.driver");
@@ -43,7 +43,7 @@ public class CustomDataSource implements DataSource {
                 tmp_name = prop.getProperty("postgres.name");
                 tmp_password = prop.getProperty("postgres.password");
                 instance = new CustomDataSource(tmp_driver, tmp_url, tmp_password, tmp_name);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
