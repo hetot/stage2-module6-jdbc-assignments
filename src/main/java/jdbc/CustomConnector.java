@@ -11,7 +11,6 @@ public class CustomConnector {
             connection = DriverManager.getConnection(url);
         } catch (SQLException e) {
             System.out.println("DB connection is failed");
-            e.printStackTrace();
         }
         return connection;
     }
@@ -22,7 +21,6 @@ public class CustomConnector {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             System.out.println("DB connection is failed");
-            e.printStackTrace();
         }
         return connection;
     }
