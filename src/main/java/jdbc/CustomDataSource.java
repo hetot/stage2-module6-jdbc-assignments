@@ -7,8 +7,6 @@ import lombok.Setter;
 
 import java.io.*;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -45,7 +43,7 @@ public class CustomDataSource implements DataSource {
                 tmp_password = prop.getProperty("postgres.password");
                 instance = new CustomDataSource(tmp_driver, tmp_url, tmp_password, tmp_name);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                instance = null;
             }
         }
 
