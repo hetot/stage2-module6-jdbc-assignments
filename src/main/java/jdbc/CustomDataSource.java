@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.*;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -52,8 +53,16 @@ public class CustomDataSource implements DataSource {
 
     @Override
     public Connection getConnection() {
-        CustomConnector connector = new CustomConnector();
-        return connector.getConnection(this.url, this.name, this.password);
+        try {
+            Class.forName(this.driver);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try (Connection connection = DriverManager.getConnection(this.url, this.name, this.password)) {
+            return connection;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
